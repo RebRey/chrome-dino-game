@@ -1,0 +1,72 @@
+/* select everything on the page and set the box sizing to border box to make sizing easier */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  /* disables the user's ability to select/highlight text on the screen */
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  /* center everything on the screen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.world {
+  /* The overflow property specifies whether to clip the content or to add scroll bars when the content of an element is too big to fit in the specified area. */
+  overflow: hidden;
+  /* everything needs to be position inside this world */
+  position: relative;
+  /* width: 100%; placeholder these values will be determined in javascript */
+  /* height: 200px; placeholder these values will be determined in javascript */
+}
+
+.score {
+  position: absolute;
+  /* font will respond to screen resizing */
+  font-size: 3vmin;
+  right: 1vmin;
+  top: 1vmin;
+}
+
+.start-screen {
+  position: absolute;
+  font-size: 5vmin;
+  /* top 50% left 50% and transform translate -50% -50% centers everything in the center of screen */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hide {
+  display: none;
+}
+
+.ground {
+  --left: 0;
+  position: absolute;
+  width: 300%;
+  bottom: 0;
+  /* left will be calculated with javascript */
+  left: calc(var(--left) * 1%)
+}
+
+.dino {
+  --bottom: 0;
+  position: absolute;
+  left: 1%;
+  height: 30%;
+  bottom: calc(var(--bottom) * 1%);
+}
+
+.cactus {
+  position: absolute;
+  left: calc(var(--left) * 1%);
+  height: 30%;
+  /* makes the cactus touch the grown */
+  bottom: 0;
+}
