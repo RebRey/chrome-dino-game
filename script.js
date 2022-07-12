@@ -1,3 +1,8 @@
+// #21 import the updateGround and setupGround from the ground.js file
+import { updateGround, setupGround } from "./ground.js"
+import { updateDino, setupDino, getDinoRect, setDinoLose } from "./dino.js"
+import { updateCactus, setupCactus, getCactusRects } from "./cactus.js"
+
 // #5 create variables for the world width and height
 const WORLD_WIDTH = 100;
 const WORLD_HEIGHT = 30;
@@ -12,20 +17,30 @@ setPixelToWorldScale();
 // #4 Add a listener for window resize event and call setPixelToWorldScale function
 window.addEventListener("resize", setPixelToWorldScale);
 
-let lastTime
-let speedScale
-let score
+// #15 create a lastTime variable to get the time between updates (for step 14)
+let lastTime;
+let speedScale;
+let score;
 
 // #11 Create a function that creates an update loop that runs every single frame and it updates
 // all the positions of all of the things inside the world (dinosaur, cactus, score etc)
 function update(time) {
+  // #17 if lastTime is equal to null then make the lastTime equal to the current time.  
   if (lastTime == null) {
-    lastTime = time
-    window.requestAnimationFrame(update)
-    return
+    // #14 Get the time between updates because sometimes the computer might be going through a large
+    // workload and normally it takes 10 milliseconds before each update but then you might have a bit
+    // of a hiccup and the next update takes 50 milliseconds. 
+    // This keeps movement consistent no matter how slow or fast the computer frame rate is. 
+    lastTime = time;
+    // #13 Call the update function again to keep the update loop
+    window.requestAnimationFrame(update);
+    return;
   }
-  const delta = time - lastTime
 
+  // #16 Create a variable called delta that stores the time minus lastTime to get the time between frames.
+  const delta = time - lastTime;
+
+  // #20 call the update ground function from ground.js
   updateGround(delta, speedScale)
   updateDino(delta, speedScale)
   updateCactus(delta, speedScale)
@@ -33,8 +48,10 @@ function update(time) {
   updateScore(delta)
   if (checkLose()) return handleLose()
 
-  lastTime = time
-  window.requestAnimationFrame(update)
+  lastTime = time;
+  // #12 Only call the update function the next time we can change the content on the screen
+  // (high refresh monitor)
+  window.requestAnimationFrame(update);
 }
 
 // #2 Create a function called setPixelToWorldScale
